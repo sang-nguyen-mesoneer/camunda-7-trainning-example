@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1j780f2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.2" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:collaboration id="Collaboration_1tjly66">
+    <bpmn:participant id="Participant_0c4no5e" processRef="Process_Exception" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Exception" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_16uprs3" sourceRef="StartEvent_1" targetRef="Activity_13ff1iv" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_16uprs3</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Activity_13ff1iv">
+      <bpmn:incoming>Flow_16uprs3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k2kdvh</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1qg6kvd">
+        <bpmn:outgoing>Flow_14gb17v</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_14gb17v" sourceRef="Event_1qg6kvd" targetRef="Activity_0y4b79y" />
+      <bpmn:endEvent id="Event_0yz7g2u">
+        <bpmn:incoming>Flow_1s2qw1p</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1s2qw1p" sourceRef="Activity_0y4b79y" targetRef="Event_0yz7g2u" />
+      <bpmn:serviceTask id="Activity_0y4b79y" name="Throw Error" camunda:delegateExpression="${throwErrorDelegate}">
+        <bpmn:incoming>Flow_14gb17v</bpmn:incoming>
+        <bpmn:outgoing>Flow_1s2qw1p</bpmn:outgoing>
+      </bpmn:serviceTask>
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Event_1xyc4ti" attachedToRef="Activity_13ff1iv">
+      <bpmn:outgoing>Flow_0qp0oay</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0b1apbe" errorRef="Error_1ydtfqq" />
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="Event_0uobt5q">
+      <bpmn:incoming>Flow_0k2kdvh</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0k2kdvh" sourceRef="Activity_13ff1iv" targetRef="Event_0uobt5q" />
+    <bpmn:sequenceFlow id="Flow_0qp0oay" sourceRef="Event_1xyc4ti" targetRef="Activity_0t6tv2u" />
+    <bpmn:endEvent id="Event_1fiz3e0">
+      <bpmn:incoming>Flow_1fpw3g2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1fpw3g2" sourceRef="Activity_0t6tv2u" targetRef="Event_1fiz3e0" />
+    <bpmn:serviceTask id="Activity_0t6tv2u" camunda:delegateExpression="${handleErrorDelegate}">
+      <bpmn:incoming>Flow_0qp0oay</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fpw3g2</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:error id="Error_1ydtfqq" name="ThrowError" errorCode="java.lang.Exception" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1tjly66">
+      <bpmndi:BPMNShape id="Participant_0c4no5e_di" bpmnElement="Participant_0c4no5e" isHorizontal="true">
+        <dc:Bounds x="129" y="60" width="781" height="400" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="192" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0uobt5q_di" bpmnElement="Event_0uobt5q">
+        <dc:Bounds x="632" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1fiz3e0_di" bpmnElement="Event_1fiz3e0">
+        <dc:Bounds x="782" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j33jgy_di" bpmnElement="Activity_0t6tv2u">
+        <dc:Bounds x="630" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0omoou8_di" bpmnElement="Activity_13ff1iv">
+        <dc:Bounds x="460" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16vbz0w_di" bpmnElement="Event_1xyc4ti">
+        <dc:Bounds x="542" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_16uprs3_di" bpmnElement="Flow_16uprs3">
+        <di:waypoint x="228" y="280" />
+        <di:waypoint x="460" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k2kdvh_di" bpmnElement="Flow_0k2kdvh">
+        <di:waypoint x="560" y="280" />
+        <di:waypoint x="632" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qp0oay_di" bpmnElement="Flow_0qp0oay">
+        <di:waypoint x="560" y="222" />
+        <di:waypoint x="560" y="160" />
+        <di:waypoint x="630" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fpw3g2_di" bpmnElement="Flow_1fpw3g2">
+        <di:waypoint x="730" y="160" />
+        <di:waypoint x="782" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_11h5vsp">
+    <bpmndi:BPMNPlane id="BPMNPlane_1z0qmps" bpmnElement="Activity_13ff1iv">
+      <bpmndi:BPMNShape id="Event_1qg6kvd_di" bpmnElement="Event_1qg6kvd">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yz7g2u_di" bpmnElement="Event_0yz7g2u">
+        <dc:Bounds x="432" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13dordl_di" bpmnElement="Activity_0y4b79y">
+        <dc:Bounds x="250" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_14gb17v_di" bpmnElement="Flow_14gb17v">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="250" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s2qw1p_di" bpmnElement="Flow_1s2qw1p">
+        <di:waypoint x="350" y="120" />
+        <di:waypoint x="432" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

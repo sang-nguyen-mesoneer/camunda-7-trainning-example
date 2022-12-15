@@ -1,0 +1,60 @@
+@host = http://localhost:8080
+@contentType = application/json
+
+#Start process by signal
+POST {{host}}/startProcess/signal HTTP/1.1
+content-type: {{contentType}}
+
+###
+#Start process by manual
+POST {{host}}/startProcess/manual HTTP/1.1
+content-type: {{contentType}}
+
+###
+#Start process by message
+POST {{host}}/startProcess/message HTTP/1.1
+content-type: {{contentType}}
+
+###
+#Start process by process async
+POST {{host}}/startProcess/async HTTP/1.1
+content-type: {{contentType}}
+
+###
+#Start process by process with handle exception
+POST {{host}}/startProcess/throw HTTP/1.1
+content-type: {{contentType}}
+
+###
+# Get all process ids with processDefinitionKey
+# processDefinitionKey is: start_process, start_process_async, Process_Exception
+GET {{host}}/processIds/start_process HTTP/1.1
+content-type: {{contentType}}
+
+###
+GET {{host}}/status
+
+###
+# triggerProcess by process by type and processInstanceId
+# type is: message or signal
+# processInstanceId of process `start_process`
+POST {{host}}/triggerProcess/message/b5f21c56-7c34-11ed-85b5-3887d5d7275a HTTP/1.1
+content-type: {{contentType}}
+
+###
+# suspendProcess by processInstanceId
+POST {{host}}/suspendProcess/4376b4f5-7c34-11ed-85b5-3887d5d7275a HTTP/1.1
+content-type: {{contentType}}
+
+###
+# activateProcess by processInstanceId
+POST {{host}}/activateProcess/4376b4f5-7c34-11ed-85b5-3887d5d7275a HTTP/1.1
+content-type: {{contentType}}
+
+###
+# endProcess by processInstanceId
+POST {{host}}/endProcess/ed7673d6-7c34-11ed-85b5-3887d5d7275a HTTP/1.1
+content-type: {{contentType}}
+
+
+
