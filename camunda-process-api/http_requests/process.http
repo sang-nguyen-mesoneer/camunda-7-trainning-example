@@ -21,6 +21,11 @@ POST {{host}}/startProcess/async HTTP/1.1
 content-type: {{contentType}}
 
 ###
+#Start process by process variable
+POST {{host}}/startProcess/variable HTTP/1.1
+content-type: {{contentType}}
+
+###
 #Start process by process with handle exception
 POST {{host}}/startProcess/throw HTTP/1.1
 content-type: {{contentType}}
@@ -55,6 +60,12 @@ content-type: {{contentType}}
 # endProcess by processInstanceId
 POST {{host}}/endProcess/ed7673d6-7c34-11ed-85b5-3887d5d7275a HTTP/1.1
 content-type: {{contentType}}
+
+###
+# complete userTask with taskId
+POST {{host}}/completeUserTask/1f036252-8014-11ed-8094-3887d5d7275a HTTP/1.1
+content-type: {{contentType}}
+
 
 
 

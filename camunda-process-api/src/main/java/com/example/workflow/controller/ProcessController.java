@@ -60,4 +60,11 @@ public class ProcessController {
 		processService.endProcess(processInstanceId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	@PostMapping("/completeUserTask/{userTaskId}")
+	public ResponseEntity<Object> completeUserTask(@PathVariable() String userTaskId) {
+		processService.completeUserTask(userTaskId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
 }

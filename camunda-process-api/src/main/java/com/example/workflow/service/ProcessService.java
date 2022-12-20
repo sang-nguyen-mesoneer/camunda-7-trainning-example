@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.camunda.bpm.engine.rest.impl.FetchAndLockHandlerImpl;
 import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.model.bpmn.instance.UserTask;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,11 @@ public class ProcessService {
 	public static String LOCAL_VARIABLE = "LOCAL_VARIABLE";
 
 	private final RuntimeService runtimeService;
+	private final TaskService taskService;
 
-	public ProcessService(RuntimeService runtimeService) {
+	public ProcessService(RuntimeService runtimeService, TaskService taskService) {
 		this.runtimeService = runtimeService;
+		this.taskService = taskService;
 	}
 
 	public void startProcess(String action) {
@@ -43,6 +46,10 @@ public class ProcessService {
 		}
 		case "throw": {
 			runtimeService.startProcessInstanceByKey("Process_Exception");
+			break;
+		}
+		case "variable": {
+			runtimeService.startProcessInstanceByKey("Process_Variable");
 			break;
 		}
 		default:
@@ -108,6 +115,17 @@ public class ProcessService {
 				.list();
 		return processInstances.stream().map(ProcessInstance::getId).collect(Collectors.toList());
 
+	}
+
+	public void completeUserTask(String usertaskId) {
+		Task task =
+		        taskService
+		            .createTaskQuery()
+		            .initializeFormKeys()
+		            .taskId(usertaskId)
+		            .singleResult();
+		System.out.println(taskService.getVariableLocal(task.getId(), LOCAL_VARIABLE));
+		taskService.complete(usertaskId);
 	}
 
 }
